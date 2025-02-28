@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Container from "./components/container/Container";
+import CardList from "./components/card/CardList";
+import InsertUser from "./components/form/InsertUser";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [names, setName] = useState([
+    {
+      id: 1,
+      name: "kareem",
+      age: "36",
+      location: "giza",
+      nationality: "egyptian",
+    },
+    {
+      id: 2,
+      name: "fara",
+      age: "30",
+      location: "giza",
+      nationality: "egyptian",
+    },
+    {
+      id: 3,
+      name: "mohamed",
+      age: "25",
+      location: "giza",
+      nationality: "egyptian",
+    },
+    {
+      id: 4,
+      name: "ahmed",
+      age: "25",
+      location: "cairo",
+      nationality: "egyptian",
+    },
+  ]);
+
+  const deleteUserHandler = (id) => {
+    const deleteData = names.filter((el) => el.id !== id);
+    setName(deleteData);
+  };
+
+  const insertUserHandler = (data) => {
+    data.id = new Date();
+    setName([...names, data]);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Container style={{ backgroundColor: "#fae387" }}>
+      <InsertUser insertHandler={insertUserHandler} />
+      <CardList list={names} deleteHandler={deleteUserHandler} />
+    </Container>
+  );
+};
 
-export default App
+export default App;
